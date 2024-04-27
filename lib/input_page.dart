@@ -16,6 +16,7 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Gender? selectedGender;
   int height = 180;
+  int weight = 60;
 
   @override
   Widget build(BuildContext context) {
@@ -86,14 +87,15 @@ class _InputPageState extends State<InputPage> {
                   ),
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
-                        activeTrackColor: Colors.white,
-                        inactiveTrackColor: const Color(0XFF8D8E98),
-                        thumbColor: const Color(0XFFEB1555),
-                        overlayColor: const Color(0X29EB1555),
-                        thumbShape:
-                            const RoundSliderThumbShape(enabledThumbRadius: 15),
-                        overlayShape:
-                            const RoundSliderOverlayShape(overlayRadius: 25)),
+                      activeTrackColor: Colors.white,
+                      inactiveTrackColor: const Color(0XFF8D8E98),
+                      thumbColor: const Color(0XFFEB1555),
+                      overlayColor: const Color(0X29EB1555),
+                      thumbShape:
+                          const RoundSliderThumbShape(enabledThumbRadius: 15),
+                      overlayShape:
+                          const RoundSliderOverlayShape(overlayRadius: 25),
+                    ),
                     child: Slider(
                       value: height.toDouble(),
                       min: 120.0,
@@ -109,14 +111,54 @@ class _InputPageState extends State<InputPage> {
               ),
             ),
           ),
-          const Expanded(
+          Expanded(
             child: Row(
               children: [
                 Expanded(
-                  child: ReusableCard(colour: kActiveCardColor),
+                  child: ReusableCard(
+                    colour: kActiveCardColor,
+                    childCard: Column(
+                      children: [
+                        const Text(
+                          'WEIGHT',
+                          style: kLabelTextStyle,
+                        ),
+                        Text(
+                          weight.toString(),
+                          style: kNumberTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundedIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              onPress: () {
+                                setState(() {
+                                  weight--;
+                                });
+                              },
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            RoundedIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              onPress: () {
+                                setState(() {
+                                  weight++;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                Expanded(
-                  child: ReusableCard(colour: kActiveCardColor),
+                const Expanded(
+                  child: ReusableCard(
+                    colour: kActiveCardColor,
+                  ),
                 ),
               ],
             ),
@@ -128,6 +170,26 @@ class _InputPageState extends State<InputPage> {
           )
         ],
       ),
+    );
+  }
+}
+
+class RoundedIconButton extends StatelessWidget {
+  const RoundedIconButton(
+      {super.key, required this.icon, required this.onPress});
+
+  final IconData icon;
+  final Function() onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      onPressed: onPress,
+      constraints: const BoxConstraints.tightFor(width: 56, height: 56),
+      elevation: 6,
+      fillColor: const Color(0XFF4C4F5E),
+      shape: const CircleBorder(),
+      child: Icon(icon),
     );
   }
 }
