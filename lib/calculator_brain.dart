@@ -1,12 +1,12 @@
 import 'dart:math';
 
+double _bmi = 0;
+
 class CalculatorBrain {
   CalculatorBrain({required this.weight, required this.height});
 
   final int weight;
   final int height;
-
-  double _bmi = 0;
 
   String calculateBMI() {
     _bmi = weight / pow(height / 100, 2);
@@ -17,7 +17,7 @@ class CalculatorBrain {
   String getResult() {
     if (_bmi > 25) {
       return 'Overweight';
-    } else if (_bmi > 18.5) {
+    } else if (_bmi >= 18.5) {
       return 'Normal';
     } else {
       return 'UnderWeight';
@@ -26,7 +26,7 @@ class CalculatorBrain {
 
   String getInterpretation() {
     if (_bmi > 25) {
-      return 'You have a higher than normal body weight. Try to exercise more?';
+      return 'You have a higher than normal body weight. Try to exercise more!';
     } else if (_bmi > 18.5) {
       return 'You have a normal body weight. Good job!';
     } else {
